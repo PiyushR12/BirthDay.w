@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBD Loading | Rupam</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0; height: 100vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: #0f0c29;
+            background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
+            font-family: 'Poppins', sans-serif;
+            color: #fff; overflow: hidden; position: relative;
+        }
+
+        .container {
+            text-align: center; position: relative; z-index: 2;
+            padding: 40px; border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+
+        .loading-text {
+            font-size: 2em; font-weight: 600;
+            background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtext { font-size: 1.1em; color: rgba(255,255,255,0.8); margin-bottom: 30px; height: 25px; }
+
+        .progress-bar {
+            width: 250px; height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px; overflow: hidden; margin: 0 auto;
+        }
+
+        .progress {
+            width: 0%; height: 100%;
+            background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
+            border-radius: 50px;
+            animation: load 3.5s ease-in-out forwards;
+        }
+
+        .heart { width: 60px; height: 60px; margin-top: 30px; animation: heartbeat 1s infinite ease-in-out; filter: drop-shadow(0 0 10px rgba(220, 39, 67, 0.6)); }
+
+        @keyframes load { 0% { width: 0%; } 100% { width: 100%; } }
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="loading-text">Preparing Magic ✨</div>
+        <div class="subtext" id="typewriter-text"></div>
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+        <img class="heart" src="heart.svg" alt="Heart" onerror="this.src='https://cdn-icons-png.flaticon.com/512/833/833472.png'">
+    </div>
+
+    <script>
+        const message = "Get ready for the cutest moment... 💖";
+        let index = 0;
+        function typeWriter() {
+            if (index < message.length) {
+                document.getElementById("typewriter-text").innerHTML += message.charAt(index);
+                index++;
+                setTimeout(typeWriter, 60);
+            }
+        }
+        typeWriter();
+
+        setTimeout(() => {
+            window.location.href = 'main.html';
+        }, 3500);
+    </script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Love Login | Rupam</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+    body {
+      height: 100vh;
+      overflow: hidden;
+      background: #0f0c29;
+      background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    body::before, body::after {
+      content: ''; position: absolute; width: 300px; height: 300px;
+      border-radius: 50%; filter: blur(80px); z-index: 0;
+      animation: orbFloat 10s infinite alternate ease-in-out;
+    }
+    body::before { background: #bc1888; top: 10%; left: 15%; }
+    body::after { background: #f09433; bottom: 10%; right: 15%; animation-delay: -5s; }
+
+    @keyframes orbFloat {
+      0% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+      100% { transform: translate(30px, 30px) scale(1.2); opacity: 0.8; }
+    }
+
+    #particles-js { position: fixed; width: 100%; height: 100%; z-index: 1; top: 0; left: 0; }
+
+    .glass-form {
+      position: relative;
+      z-index: 2;
+      width: 400px;
+      max-width: 90vw;
+      padding: 40px 40px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 30px;
+      box-shadow: 0 25px 45px rgba(0,0,0,0.3);
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .avatar-container {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 20px auto;
+      border-radius: 50%;
+      padding: 4px;
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      box-shadow: 0 0 20px rgba(220, 39, 67, 0.4);
+    }
+
+    .avatar-container img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #24243e;
+      /* Corrected rotation to -90deg so faces are upright */
+      transform: rotate(-90deg); 
+      transition: transform 0.5s ease;
+    }
+
+    .avatar-container:hover img {
+      transform: rotate(-90deg) scale(1.05);
+    }
+
+    .login-box h2 {
+      color: white;
+      text-align: center;
+      font-size: 1.6em;
+      margin-bottom: 25px;
+      letter-spacing: 1px;
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .input-box {
+      position: relative;
+      margin: 25px 0;
+    }
+
+    .input-box input {
+      width: 100%;
+      padding: 15px 20px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 25px;
+      font-size: 1em;
+      color: white;
+      text-align: center;
+      outline: none;
+      transition: 0.4s;
+    }
+
+    .input-box input:focus, .input-box input:valid {
+      border-color: #bc1888;
+      box-shadow: 0 0 15px rgba(188, 24, 136, 0.4);
+      background: rgba(255,255,255,0.1);
+    }
+
+    .input-box label {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9em;
+      pointer-events: none;
+      transition: 0.4s;
+    }
+
+    .input-box input:focus ~ label,
+    .input-box input:valid ~ label {
+      top: -12px;
+      font-size: 0.8em;
+      color: #f09433;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .login-btn {
+      width: 100%; padding: 15px; margin-top: 10px;
+      background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
+      border: none; border-radius: 25px;
+      color: white; font-size: 1.1em; font-weight: 600;
+      cursor: pointer; transition: 0.3s ease;
+      box-shadow: 0 10px 20px rgba(220, 39, 67, 0.3);
+    }
+
+    .login-btn:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(220, 39, 67, 0.6); }
+  </style>
+</head>
+<body>
+  <div id="particles-js"></div>
+
+  <div class="glass-form">
+    <div class="login-box">
+      
+      <div class="avatar-container">
+        <!-- Painted portrait added here -->
+        <img src="20260606_222417-IMG_STYLE.jpg" alt="Us">
+      </div>
+
+      <h2>Welcome Dearest 🤍</h2>
+      
+      <form id="loginForm">
+        <div class="input-box">
+          <input type="text" required />
+          <label>Your Sweet Name</label>
+        </div>
+        
+        <div class="input-box">
+          <input type="password" required />
+          <label>Secret Love Code</label>
+        </div>
+
+        <button type="submit" class="login-btn">Unlock My Heart 🗝️</button>
+      </form>
+      
+    </div>
+  </div>
+
+  <script>
+    particlesJS('particles-js', {
+      "particles": {
+        "number": { "value": 80 },
+        "color": { "value": "#ffffff" },
+        "shape": { "type": "circle" },
+        "opacity": { "value": 0.5, "random": true },
+        "size": { "value": 3, "random": true },
+        "move": { "enable": true, "speed": 1.5, "direction": "top", "out_mode": "out" }
+      },
+      "interactivity": { "events": { "onhover": { "enable": true, "mode": "repulse" } } }
+    });
+
+    // Restored your original working form submission logic
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      window.location.href = 'loading.html';
+    });
+  </script>
+</body>
+</html>
