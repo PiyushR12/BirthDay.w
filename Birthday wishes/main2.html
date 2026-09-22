@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Make a Wish! | Rupam</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    
+    body {
+      background: #0f0c29;
+      background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
+      color: white;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    body::before, body::after {
+      content: ''; position: absolute; width: 300px; height: 300px;
+      border-radius: 50%; filter: blur(80px); z-index: -1;
+      animation: orbFloat 10s infinite alternate ease-in-out;
+    }
+    body::before { background: #bc1888; top: 10%; left: 20%; }
+    body::after { background: #f09433; bottom: 10%; right: 20%; animation-delay: -5s; }
+
+    @keyframes orbFloat {
+      0% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+      100% { transform: translate(50px, 50px) scale(1.2); opacity: 0.8; }
+    }
+
+    .container {
+      position: relative;
+      width: 90%; max-width: 450px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+      padding: 30px; text-align: center;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+
+    h2 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .cake-box {
+      position: relative;
+      margin: 30px auto 10px auto;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .cake {
+      font-size: 80px;
+      user-select: none;
+      filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+    }
+
+    .candle {
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 35px;
+      animation: flicker 0.5s infinite alternate;
+    }
+
+    @keyframes flicker {
+      0% { transform: translateX(-50%) scale(1) rotate(-2deg); }
+      100% { transform: translateX(-50%) scale(1.1) rotate(2deg); }
+    }
+
+    .instruction {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 10px;
+      animation: pulseText 1.5s infinite;
+    }
+
+    @keyframes pulseText { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+    /* Popup Polaroid Card */
+    .popup-card {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      background: #f4f1ea;
+      padding: 15px 15px 25px 15px;
+      border-radius: 4px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.7);
+      text-align: center;
+      z-index: 100;
+      transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      width: 280px;
+      color: #333;
+    }
+
+    .popup-card.show {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .popup-card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #222;
+      text-align: left;
+    }
+
+    .popup-card img {
+      width: 100%;
+      height: 230px;
+      object-fit: cover;
+      border-radius: 2px;
+    }
+
+    .popup-card .caption {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.5rem;
+      margin-top: 8px;
+      color: #b31942;
+      text-align: left;
+    }
+
+    /* Action button inside the popup */
+    .popup-btn {
+      margin-top: 12px;
+      width: 100%;
+      padding: 10px;
+      background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
+      border: none;
+      border-radius: 20px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(220, 39, 67, 0.4);
+    }
+
+    /* Main box action button */
+    .action-btn {
+      display: none;
+      margin-top: 15px;
+      padding: 12px 30px;
+      background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
+      border: none; border-radius: 25px;
+      color: white; font-size: 1rem; font-weight: 600;
+      cursor: pointer; transition: 0.3s;
+      box-shadow: 0 10px 20px rgba(220, 39, 67, 0.4);
+    }
+    .action-btn:hover, .popup-btn:hover { transform: scale(1.03); }
+  </style>
+</head>
+<body>
+
+  <!-- Hidden Audio Element for the Birthday Song -->
+  <audio id="birthdaySong" src="c:\Users\91766\Desktop\New folder\Birthday wishes\birthday-song.mp3.mp4" preload="auto"></audio>
+
+  <div class="container" id="mainContainer">
+    <h2>Make a Wish! 🎂</h2>
+    <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Tap the candle to blow it out</p>
+    
+    <div class="cake-box" id="cakeBox" onclick="blowCandle()">
+      <div class="candle" id="candleFlame">🕯️</div>
+      <div class="cake">🎂</div>
+    </div>
+    
+    <div class="instruction" id="instructionText">Touch the candle to make your wish come true ✨</div>
+
+    <!-- Main Gift Button -->
+    <button class="action-btn" id="giftBtn" onclick="window.location.href='last.html'">Open Your Main Gift 🎁</button>
+  </div>
+
+  <!-- Popup Card -->
+  <div class="popup-card" id="popupCard">
+    <h3>U see this ?</h3>
+    <img src="c:\Users\91766\Desktop\New folder\Birthday wishes\Screenshot_20260922-235014_Chrome~2.jpg" alt="Fav one">
+    <div class="caption">My fav one!! 💖</div>
+    <button class="popup-btn" onclick="window.location.href='last.html'">Open 3D Cube Gift 🎁</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+  <script>
+    let blown = false;
+
+    function blowCandle() {
+      if (blown) return;
+      blown = true;
+
+      // 1. Play the birthday music immediately upon blowing the candle
+      const song = document.getElementById('birthdaySong');
+      song.play().catch(err => console.log("Audio autoplay restricted by browser:", err));
+
+      // 2. Blow out candle
+      document.getElementById('candleFlame').innerText = '💨';
+      document.getElementById('instructionText').innerText = "Wish granted! Look below 👇";
+
+      // 3. Confetti burst
+      confetti({
+        particleCount: 120,
+        spread: 80,
+        origin: { y: 0.6 }
+      });
+
+      // 4. Popup photo card and show main button after delay
+      setTimeout(() => {
+        document.getElementById('popupCard').classList.add('show');
+        document.getElementById('giftBtn').style.display = 'inline-block';
+      }, 700);
+    }
+  </script>
+</body>
+</html>
