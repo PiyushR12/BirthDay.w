@@ -176,6 +176,9 @@
 </head>
 <body>
 
+  <!-- Audio Element for the Box Opening Song -->
+  <audio id="boxSong" src="birthday-song.mp3" preload="auto"></audio>
+
   <header>
     <h1>Our Special Memory Box 💖</h1>
     <p id="instructionText">Swipe/Drag to rotate • Tap to open box!</p>
@@ -197,10 +200,10 @@
         <img src="Screenshot_20260923-011101_Chrome~2.jpg" alt="Memory">
       </div>
       <div class="cube-face cube-face-top">
-        <img src="Screenshot_20260923-011022_Chrome~2.jpg" alt="Memory">
+        <img src="Screenshot_20260923-011022_Chrome.jpg" alt="Memory">
       </div>
       <div class="cube-face cube-face-bottom">
-        <img src="Screenshot_20260923-011050_Chrome~2.jpg" alt="Memory">
+        <img src="Screenshot_20260923-011050_Chrome.jpg" alt="Memory">
       </div>
       <!-- 4 Inner Faces revealing all 10 images -->
       <div class="cube-face cube-face-in1">
@@ -226,13 +229,14 @@
   <script>
     const cube = document.getElementById('cube');
     const scene = document.getElementById('scene');
+    const boxSong = document.getElementById('boxSong');
     let isOpen = false;
     let isDragging = false;
     let startX, startY;
     let rotX = -15, rotY = 25;
     let dragDistance = 0;
 
-    // Toggle Box Open/Close on Tap (only if not dragging)
+    // Toggle Box Open/Close on Tap & Play Music
     scene.addEventListener('click', (e) => {
       if (dragDistance < 6) {
         isOpen = !isOpen;
@@ -240,8 +244,11 @@
         
         const instruction = document.getElementById('instructionText');
         if (isOpen) {
+          boxSong.play().catch(err => console.log("Audio play blocked:", err));
           instruction.innerText = "Drag to look around inside • Tap to close box ✨";
         } else {
+          boxSong.pause();
+          boxSong.currentTime = 0;
           instruction.innerText = "Swipe/Drag to rotate • Tap to open box!";
         }
       }
