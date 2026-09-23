@@ -3,65 +3,155 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Make a Wish! | Rupam</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  <title>Make a Wish! | Piyush</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,500;1,400;1,600&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-    
+
     body {
-      background: #0f0c29;
-      background: linear-gradient(135deg, #1b1636, #2d2657, #0a081a);
-      color: white;
-      height: 100vh;
-      overflow: hidden;
+      background: #08030b;
+      background: radial-gradient(ellipse at center, #220822 0%, #0c0310 65%, #050107 100%);
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 20px 10px;
       user-select: none;
     }
 
+    /* Ambient Glow */
     body::before, body::after {
-      content: ''; position: absolute; width: 340px; height: 340px;
-      border-radius: 50%; filter: blur(95px); z-index: -1;
-      animation: orbFloat 10s infinite alternate ease-in-out;
+      content: ''; position: fixed; width: 360px; height: 360px;
+      border-radius: 50%; filter: blur(100px); z-index: -1;
+      animation: ambientDrift 14s infinite alternate ease-in-out;
     }
-    body::before { background: #bc1888; top: 8%; left: 15%; }
-    body::after { background: #f09433; bottom: 8%; right: 15%; animation-delay: -5s; }
+    body::before { background: #9d0208; top: -50px; left: -50px; opacity: 0.35; }
+    body::after { background: #e01e5a; bottom: -50px; right: -50px; opacity: 0.35; animation-delay: -7s; }
 
-    @keyframes orbFloat {
-      0% { transform: translate(0, 0) scale(1); opacity: 0.45; }
-      100% { transform: translate(45px, 45px) scale(1.25); opacity: 0.75; }
+    @keyframes ambientDrift {
+      0% { transform: scale(1) translate(0, 0); }
+      100% { transform: scale(1.3) translate(40px, 30px); }
     }
 
-    .container {
+    .card-wrapper {
       position: relative;
-      width: 92%; max-width: 440px;
-      background: rgba(255, 255, 255, 0.06);
-      backdrop-filter: blur(18px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 28px;
-      padding: 30px 20px;
+      width: 100%;
+      max-width: 440px;
+      background: rgba(255, 255, 255, 0.035);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 105, 180, 0.15);
+      border-radius: 30px;
+      padding: 35px 22px;
       text-align: center;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), 0 0 30px rgba(224, 30, 90, 0.15);
+      transition: transform 0.4s ease;
+    }
+
+    /* CHAPTER SYSTEM */
+    .chapter {
+      display: none;
+      animation: fadeInStage 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .chapter.active { display: block; }
+
+    @keyframes fadeInStage {
+      from { opacity: 0; transform: translateY(16px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     h2 {
       font-family: 'Dancing Script', cursive;
-      font-size: 2.7rem;
-      margin-bottom: 6px;
-      background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
+      font-size: 2.8rem;
+      background: linear-gradient(45deg, #ff9a9e, #fecfef, #ff758c);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
     }
 
-    /* Candle Rack */
+    .sub-head {
+      font-size: 0.85rem;
+      color: rgba(255, 214, 223, 0.7);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+
+    /* CHAPTER 1: Heartbeat Touch */
+    .pulse-heart-btn {
+      width: 100px;
+      height: 100px;
+      margin: 30px auto;
+      border-radius: 50%;
+      background: radial-gradient(circle, #e01e5a, #85082e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      cursor: pointer;
+      box-shadow: 0 0 30px rgba(224, 30, 90, 0.6);
+      animation: heartThrob 1.3s infinite ease-in-out;
+      transition: transform 0.2s;
+    }
+
+    .pulse-heart-btn:active { transform: scale(0.92); }
+
+    @keyframes heartThrob {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 25px rgba(224, 30, 90, 0.5); }
+      50% { transform: scale(1.12); box-shadow: 0 0 45px rgba(224, 30, 90, 0.85); }
+    }
+
+    .progress-bar-container {
+      width: 80%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      margin: 20px auto 10px auto;
+      overflow: hidden;
+      display: none;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #ff758c, #ff416c);
+      transition: width 0.1s linear;
+    }
+
+    /* CHAPTER 2: Velvet Letter */
+    .letter-body {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #ffeef2;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 20px 18px;
+      border-radius: 16px;
+      border-left: 3px solid #ff758c;
+      text-align: left;
+      margin-bottom: 24px;
+    }
+
+    .letter-body span {
+      display: block;
+      margin-top: 10px;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.4rem;
+      color: #ff99c8;
+      text-align: right;
+    }
+
+    /* CHAPTER 3: Candles & Cake */
     .candle-stage {
       display: flex;
       justify-content: center;
       align-items: flex-end;
-      gap: 24px;
-      margin: 30px 0 6px 0;
-      height: 85px;
+      gap: 22px;
+      margin: 20px 0 6px 0;
+      height: 80px;
     }
 
     .candle-wrapper {
@@ -72,42 +162,33 @@
       position: relative;
     }
 
-    /* Animated CSS Flame */
     .flame {
       width: 14px;
       height: 24px;
-      background: linear-gradient(to bottom, #fff, #ffd200 45%, #ff5100);
+      background: linear-gradient(to bottom, #fff, #ffd200 45%, #ff3b00);
       border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
-      box-shadow: 0 0 16px #ffae00, 0 0 32px #ff4500;
+      box-shadow: 0 0 16px #ffae00, 0 0 35px #ff4500;
       opacity: 0;
       transform: scale(0.2);
-      transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       animation: flameWiggle 0.8s infinite alternate ease-in-out;
     }
 
-    .candle-wrapper.lit .flame {
-      opacity: 1;
-      transform: scale(1);
-    }
+    .candle-wrapper.lit .flame { opacity: 1; transform: scale(1); }
 
     @keyframes flameWiggle {
-      0% { transform: scale(1) rotate(-3deg); }
-      100% { transform: scale(1.08) rotate(3deg); }
+      0% { transform: scale(1) rotate(-4deg); }
+      100% { transform: scale(1.1) rotate(4deg); }
     }
 
-    .wick {
-      width: 2px;
-      height: 7px;
-      background: #444;
-      margin-top: 1px;
-    }
+    .wick { width: 2px; height: 7px; background: #555; margin-top: 1px; }
 
     .stick {
       width: 12px;
       height: 48px;
-      background: repeating-linear-gradient(45deg, #ff758c, #ff758c 6px, #fff 6px, #fff 12px);
+      background: repeating-linear-gradient(45deg, #e63946, #e63946 6px, #fdf0f4 6px, #fdf0f4 12px);
       border-radius: 4px 4px 2px 2px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
 
     .smoke {
@@ -118,13 +199,8 @@
       pointer-events: none;
     }
 
-    .candle-wrapper.blown .flame {
-      display: none;
-    }
-
-    .candle-wrapper.blown .smoke {
-      animation: smokeRise 1.2s forwards ease-out;
-    }
+    .candle-wrapper.blown .flame { display: none; }
+    .candle-wrapper.blown .smoke { animation: smokeRise 1.2s forwards ease-out; }
 
     @keyframes smokeRise {
       0% { opacity: 0.9; transform: translateY(0) scale(0.8); }
@@ -132,54 +208,58 @@
     }
 
     .cake {
-      font-size: 80px;
-      filter: drop-shadow(0 12px 20px rgba(0,0,0,0.4));
+      font-size: 78px;
+      filter: drop-shadow(0 12px 22px rgba(0,0,0,0.5));
       line-height: 1;
       margin-bottom: 12px;
     }
 
-    .instruction {
-      font-size: 0.95rem;
-      color: rgba(255, 255, 255, 0.85);
-      min-height: 24px;
-      transition: color 0.3s;
+    /* CHAPTER 4: Whisper Prompt */
+    .whisper-box {
+      margin: 20px 0;
+      padding: 16px;
+      background: rgba(224, 30, 90, 0.12);
+      border-radius: 16px;
+      border: 1px dashed rgba(255, 154, 162, 0.4);
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: #ffd6e0;
+      line-height: 1.6;
     }
 
-    /* Blow Action Button */
-    .blow-btn {
-      display: none;
-      margin: 14px auto 0 auto;
-      padding: 10px 24px;
-      background: linear-gradient(45deg, #f09433, #dc2743);
+    /* BUTTONS */
+    .action-btn {
+      padding: 12px 30px;
+      background: linear-gradient(45deg, #ff758c, #ff416c, #bc1888);
       border: none;
-      border-radius: 20px;
+      border-radius: 25px;
       color: white;
-      font-weight: 600;
       font-size: 0.95rem;
+      font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 0 20px rgba(240, 148, 51, 0.6);
-      animation: pulseBtn 1.2s infinite alternate;
+      box-shadow: 0 8px 22px rgba(255, 65, 108, 0.45);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
-    @keyframes pulseBtn {
-      0% { transform: scale(0.97); }
-      100% { transform: scale(1.05); }
+    .action-btn:hover {
+      transform: scale(1.04);
+      box-shadow: 0 10px 28px rgba(255, 65, 108, 0.65);
     }
 
-    /* Polaroid Card Popup */
+    /* ORIGINAL POPUP CARD OVERLAY */
     .popup-card {
       position: fixed;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%) scale(0);
-      background: #fdfaf6;
-      padding: 16px 16px 20px 16px;
-      border-radius: 12px;
-      box-shadow: 0 30px 70px rgba(0,0,0,0.85);
+      background: #f4f1ea;
+      padding: 15px 15px 25px 15px;
+      border-radius: 4px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.7);
       text-align: center;
       z-index: 100;
-      transition: transform 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      width: 290px;
-      color: #222;
+      transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      width: 280px;
+      color: #333;
     }
 
     .popup-card.show {
@@ -187,10 +267,10 @@
     }
 
     .popup-card h3 {
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       font-weight: 600;
-      margin-bottom: 8px;
-      color: #333;
+      margin-bottom: 10px;
+      color: #222;
       text-align: left;
     }
 
@@ -198,81 +278,124 @@
       width: 100%;
       height: 230px;
       object-fit: cover;
-      border-radius: 8px;
+      border-radius: 2px;
     }
 
     .popup-card .caption {
       font-family: 'Dancing Script', cursive;
-      font-size: 1.6rem;
-      margin: 8px 0 10px 0;
+      font-size: 1.5rem;
+      margin-top: 8px;
       color: #b31942;
       text-align: left;
     }
 
-    .popup-btn, .action-btn {
+    .popup-btn {
+      margin-top: 12px;
       width: 100%;
-      padding: 11px;
+      padding: 10px;
       background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
       border: none;
       border-radius: 20px;
       color: white;
       font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 6px 18px rgba(220, 39, 67, 0.4);
+      box-shadow: 0 5px 15px rgba(220, 39, 67, 0.4);
       transition: transform 0.2s;
     }
 
-    .action-btn {
-      display: none;
-      margin-top: 15px;
-      font-size: 1rem;
-    }
-
-    .popup-btn:hover, .action-btn:hover { transform: scale(1.03); }
+    .popup-btn:hover { transform: scale(1.03); }
   </style>
 </head>
 <body>
 
-  <!-- Audio Element -->
+  <!-- Background Music Element -->
   <audio id="birthdaySong" src="birthday-song.mp3" preload="auto"></audio>
 
-  <div class="container" id="mainContainer">
-    <h2>Make a Wish! 🎂</h2>
-    
-    <!-- 3 Animated Candles -->
-    <div class="candle-stage">
-      <div class="candle-wrapper" id="candle-0" onclick="lightCandle(0)">
-        <div class="flame"></div>
-        <div class="smoke">💨</div>
-        <div class="wick"></div>
-        <div class="stick"></div>
+  <div class="card-wrapper">
+
+    <!-- CHAPTER 1: SYNC HEARTBEATS -->
+    <div class="chapter active" id="ch1">
+      <h2>Listen Closely...</h2>
+      <p class="sub-head">A ritual before midnight</p>
+      <p style="font-size: 0.95rem; color: #f8bbd0; line-height: 1.6;">
+        Before anything else tonight, I need you to feel how fast you make my heart beat. 
+      </p>
+      <div class="pulse-heart-btn" id="heartBtn" onmousedown="startHeartSync()" onmouseup="stopHeartSync()" ontouchstart="startHeartSync()" ontouchend="stopHeartSync()">
+        💓
       </div>
-      <div class="candle-wrapper" id="candle-1" onclick="lightCandle(1)">
-        <div class="flame"></div>
-        <div class="smoke">💨</div>
-        <div class="wick"></div>
-        <div class="stick"></div>
+      <div class="progress-bar-container" id="pBar">
+        <div class="progress-fill" id="pFill"></div>
       </div>
-      <div class="candle-wrapper" id="candle-2" onclick="lightCandle(2)">
-        <div class="flame"></div>
-        <div class="smoke">💨</div>
-        <div class="wick"></div>
-        <div class="stick"></div>
-      </div>
+      <p id="heartText" style="font-size: 0.85rem; color: rgba(255,255,255,0.7);">Press & hold the heart to connect with me</p>
     </div>
 
-    <div class="cake">🎂</div>
-    
-    <div class="instruction" id="instructionText">Tap each candle to light it up! ✨ (0/3)</div>
+    <!-- CHAPTER 2: THE SEDUCTIVE CONFESSION -->
+    <div class="chapter" id="ch2">
+      <h2>Only for You 🍷</h2>
+      <p class="sub-head">Confessions in the dark</p>
+      <div class="letter-body">
+        "You carry a grace that catches my breath, and a fire that I never want to escape. 
+        Having you in my life isn't just lucky — it's the only addiction I never plan on breaking."
+        <span>— Forever captivated by you.</span>
+      </div>
+      <button class="action-btn" onclick="nextChapter(3)">Let's Light Up Your Night ✨</button>
+    </div>
 
-    <!-- Active Blow Button -->
-    <button class="blow-btn" id="blowBtn" onclick="blowAllCandles()">Make a Wish & Blow! 🌬️</button>
+    <!-- CHAPTER 3: LIGHTING THE SPARKS -->
+    <div class="chapter" id="ch3">
+      <h2>Ignite the Fire 🔥</h2>
+      <p class="sub-head">Every spark belongs to you</p>
+      
+      <div class="candle-stage">
+        <div class="candle-wrapper" id="candle-0" onclick="lightCandle(0)">
+          <div class="flame"></div>
+          <div class="smoke">💨</div>
+          <div class="wick"></div>
+          <div class="stick"></div>
+        </div>
+        <div class="candle-wrapper" id="candle-1" onclick="lightCandle(1)">
+          <div class="flame"></div>
+          <div class="smoke">💨</div>
+          <div class="wick"></div>
+          <div class="stick"></div>
+        </div>
+        <div class="candle-wrapper" id="candle-2" onclick="lightCandle(2)">
+          <div class="flame"></div>
+          <div class="smoke">💨</div>
+          <div class="wick"></div>
+          <div class="stick"></div>
+        </div>
+      </div>
 
-    <!-- Main Gift Button -->
-    <button class="action-btn" id="giftBtn" onclick="window.location.href='last.html'">Open Your Memory Box 🎁</button>
+      <div class="cake">🎂</div>
+      <p id="candleInstruction" style="font-size: 0.9rem; color: #ffccd5; margin-bottom: 16px;">
+        Tap each candle to set your birthday ablaze (0/3)
+      </p>
+      <button class="action-btn" id="toWhisperBtn" style="display: none;" onclick="nextChapter(4)">
+        Ready to Make a Wish 💋
+      </button>
+    </div>
+
+    <!-- CHAPTER 4: THE MIDNIGHT WISH & BLOWOUT -->
+    <div class="chapter" id="ch4">
+      <h2>One Secret Wish 🌙</h2>
+      <p class="sub-head">Lean in real close</p>
+      
+      <div class="whisper-box">
+        "Close your eyes. Think of the wildest, sweetest thing you want us to share this year... and blow the flames away."
+      </div>
+
+      <div style="font-size: 3.2rem; margin: 15px 0;">🕯️💨</div>
+
+      <button class="action-btn" id="blowBtn" onclick="executeBlowout()">Blow Out the Candles 🌬️</button>
+
+      <!-- Main Gift Button shown after blowout -->
+      <button class="action-btn" id="giftBtn" style="display: none; margin-top: 15px;" onclick="window.location.href='last.html'">Open Your Main Gift 🎁</button>
+    </div>
+
   </div>
 
-  <!-- Polaroid Card Popup -->
+  <!-- ORIGINAL POPUP POLAROID CARD -->
   <div class="popup-card" id="popupCard">
     <h3>U see this ?</h3>
     <img src="Screenshot_20260922-235014_Chrome~2.jpg" alt="Fav one">
@@ -283,74 +406,83 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
   <script>
-    const candleState = [false, false, false];
-    let allLit = false;
-    let hasBlown = false;
+    function nextChapter(chNum) {
+      document.querySelectorAll('.chapter').forEach(el => el.classList.remove('active'));
+      document.getElementById('ch' + chNum).classList.add('active');
+    }
 
-    function lightCandle(index) {
-      if (allLit || candleState[index]) return;
+    // CHAPTER 1: Heart Sync
+    let syncTimer = null;
+    let syncProgress = 0;
+    const pBar = document.getElementById('pBar');
+    const pFill = document.getElementById('pFill');
+    const heartText = document.getElementById('heartText');
 
-      candleState[index] = true;
-      document.getElementById(`candle-${index}`).classList.add('lit');
+    function startHeartSync() {
+      pBar.style.display = 'block';
+      heartText.innerText = "Holding... sync in progress 💕";
+      syncTimer = setInterval(() => {
+        syncProgress += 5;
+        pFill.style.width = syncProgress + '%';
+        if (syncProgress >= 100) {
+          clearInterval(syncTimer);
+          confetti({ particleCount: 30, spread: 50, origin: { y: 0.6 } });
+          setTimeout(() => nextChapter(2), 300);
+        }
+      }, 50);
+    }
 
-      // Small spark confetti on touch
-      confetti({
-        particleCount: 15,
-        spread: 40,
-        origin: { y: 0.52 }
-      });
-
-      const litCount = candleState.filter(Boolean).length;
-
-      if (litCount < 3) {
-        document.getElementById('instructionText').innerText = `Keep lighting! (${litCount}/3)`;
-      } else {
-        allLit = true;
-        document.getElementById('instructionText').innerText = "All candles are shining bright! Now close your eyes...";
-        document.getElementById('blowBtn').style.display = 'inline-block';
+    function stopHeartSync() {
+      if (syncProgress < 100) {
+        clearInterval(syncTimer);
+        syncProgress = 0;
+        pFill.style.width = '0%';
+        heartText.innerText = "Don't let go! Hold it until it fills up ✨";
       }
     }
 
-    function blowAllCandles() {
-      if (hasBlown) return;
-      hasBlown = true;
+    // CHAPTER 3: Candle Lighting
+    const candleState = [false, false, false];
+    function lightCandle(idx) {
+      if (candleState[idx]) return;
+      candleState[idx] = true;
+      document.getElementById('candle-' + idx).classList.add('lit');
 
-      document.getElementById('blowBtn').style.display = 'none';
-
-      // Extinguish candles with smoke puff
-      for (let i = 0; i < 3; i++) {
-        const el = document.getElementById(`candle-${i}`);
-        el.classList.remove('lit');
-        el.classList.add('blown');
-      }
-
-      document.getElementById('instructionText').innerText = "Wish made! May all your dreams come true ✨";
-
-      // Trigger Birthday Song
-      const song = document.getElementById('birthdaySong');
-      song.play().catch(err => console.log("Audio autoplay prevented:", err));
-
-      // Grand Confetti Blast Wave 1
       confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 }
+        particleCount: 15,
+        spread: 45,
+        origin: { y: 0.52 },
+        colors: ['#ff758c', '#ffd200', '#ff416c']
       });
 
-      // Grand Confetti Blast Wave 2
-      setTimeout(() => {
-        confetti({
-          particleCount: 120,
-          spread: 100,
-          origin: { y: 0.55 }
-        });
-      }, 350);
+      const count = candleState.filter(Boolean).length;
+      if (count < 3) {
+        document.getElementById('candleInstruction').innerText = `Keep igniting... (${count}/3)`;
+      } else {
+        document.getElementById('candleInstruction').innerText = "All flames are dancing for you!";
+        document.getElementById('toWhisperBtn').style.display = 'inline-block';
+      }
+    }
 
-      // Reveal Polaroid Card and navigation button
+    // CHAPTER 4: Blowout Celebration & Trigger Original Popup
+    function executeBlowout() {
+      document.getElementById('blowBtn').style.display = 'none';
+
+      // Play Audio
+      const song = document.getElementById('birthdaySong');
+      song.play().catch(e => console.log('Audio autoplay prevented:', e));
+
+      // Double Wave Confetti
+      confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
+      setTimeout(() => {
+        confetti({ particleCount: 140, spread: 100, origin: { y: 0.55 } });
+      }, 300);
+
+      // Trigger Original Popup Card & Reveal Button
       setTimeout(() => {
         document.getElementById('popupCard').classList.add('show');
         document.getElementById('giftBtn').style.display = 'inline-block';
-      }, 950);
+      }, 700);
     }
   </script>
 </body>
